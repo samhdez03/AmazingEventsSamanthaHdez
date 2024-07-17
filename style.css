@@ -1,0 +1,50 @@
+header{
+    background-color: rgb(44, 41, 41);
+}
+
+.navbar-brand img{
+    width:70%; 
+    height:auto
+
+}
+
+.carousel-item-size {
+    height:30vh;
+}
+
+.carousel-item-size img{
+   height: 100%;
+   object-fit: cover;
+   filter: brightness(.9);
+}
+
+.carousel-item-size a{
+    font-size:60px;
+    text-shadow: 4px 4px 4px black;
+
+}
+
+.cardEvent{
+    width: 300px;
+    margin: 10px;
+  }
+
+.empty{  
+    height:2rem; 
+    } 
+
+.cardDetail{
+    background-color: rgb(44, 41, 41);
+    color: whitesmoke;
+    }
+
+footer{
+    background-color: rgb(44, 41, 41);
+    color: antiquewhite;
+}
+
+.icon-link img{
+    width:70%; 
+    height:auto
+
+}
