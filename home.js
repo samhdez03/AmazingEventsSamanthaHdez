@@ -195,27 +195,115 @@ const data = {
     ],
   };
 
-function Tarjetas(eventos){
-    let contenedor= document.getElementById('contenedorTarjetas')
-    for(i=0; i<eventos.events.length;i++)
-    {
+function Tarjetas(cont,eventos){
+    let contenedor= document.getElementById(cont)
+    contenedor.innerHTML=""
+    if (eventos.length>0){
+    for(i=0; i<eventos.length;i++) {
         let tarjeta= document.createElement('div')
         tarjeta.className = 'card cardEvent'
         tarjeta.innerHTML = `
-                    <img src=${eventos.events[i].image} class="card-img-top h-50" alt="...">
+                    <img src=${eventos[i].image} class="card-img-top h-50" alt="...">
                     <div class="card-body text-center">
-                        <h5 class="card-title">${eventos.events[i].name} </h5>
-                        <p class="card-text m-3">${eventos.events[i].description}</p>
+                        <h5 class="card-title">${eventos[i].name} </h5>
+                        <p class="card-text m-3">${eventos[i].description}</p>
                         <div class="d-flex justify-content-between align-items-center m-1">
-                            <p >$ ${eventos.events[i].price}</p>
-                            <a href="./details.html" class="btn btn-dark">Details</a>
+                            <p >$ ${eventos[i].price}</p>
+                            <a href="./details.html?_id=${eventos[i]._id}" class="btn btn-dark">Details</a>
                         </div>
 
                     </div>
         `
         contenedor.appendChild(tarjeta)
+    } }else {
+      contenedor.className = "container-fluid d-flex flex-wrap justify-content-center h-100"
+      contenedor.innerHTML = `
+      <div class=" p-3">
+      <h1> Lo sentimos, el criterio de su búsqueda no coincide con ninguno de nuestros eventos</h1>
+      </div>`
+  }
 
-    }
+    
 
 }
-Tarjetas(data)
+let eventosHome = data.events   
+Tarjetas('contenedorTarjetas',eventosHome)
+
+let juntarCategorias = []
+for (i=0; i<data.events.length;i++){
+  if (juntarCategorias.includes(data.events[i].category)){
+
+  } else {
+    juntarCategorias.push(data.events[i].category)
+  }
+}
+
+let categoriasEstado =[]
+for (i=0; i<juntarCategorias.length; i++){
+  let nuevaCategoria = {
+    categoria: juntarCategorias[i],
+    marcada: false
+}
+categoriasEstado.push(nuevaCategoria)
+}
+
+function pintarCategorias(juntarCategorias){
+  let contenedor= document.getElementById('checkboxContainer')
+  for (i=0; i<juntarCategorias.length; i++){
+    let tarjeta= document.createElement('div')
+    tarjeta.className = 'form-check form-check-inline'
+    tarjeta.innerHTML = `
+                <input onclick="checkbox(${[i]})" class="form-check-input" type="checkbox" id="inlineCheckbox${[i]}" value="${juntarCategorias[i].categoria}" ${juntarCategorias[i].marcada? "checked": ""}>
+                <label class="form-check-label" for="inlineCheckbox${[i]}">${juntarCategorias[i].categoria}</label>
+    `
+    contenedor.appendChild(tarjeta)
+  } 
+}
+pintarCategorias(categoriasEstado)
+
+let eventosSelecc=[]
+
+
+let textoBusqueda =  document.getElementById("entradaBusqueda")
+
+let eventosF=[]
+
+function filtroBuscar(eventos, busqueda){
+  eventosF = eventos.filter(e=>e.name.toLowerCase().includes(busqueda)||e.description.toLowerCase().includes(busqueda))
+  return eventosF
+}
+
+function checkbox(i) { 
+  categoriasEstado[i].marcada =! categoriasEstado[i].marcada 
+  if (categoriasEstado[i].marcada){
+    for(j=0; j<eventosHome.length;j++) {
+      if(eventosHome[j].category==categoriasEstado[i].categoria){
+        eventosSelecc.push(eventosHome[j]) 
+      }
+    }
+  } else {
+    eventosSelecc=eventosSelecc.filter(ev => ev.category!=categoriasEstado[i].categoria)
+    if (eventosSelecc.length>0){
+      Tarjetas('contenedorTarjetas',eventosSelecc)
+      } else {
+        return Tarjetas('contenedorTarjetas',eventosHome)
+      }
+  }
+  if (eventosF.length>0){
+    texto= textoBusqueda.value.toLowerCase()
+    eventosSelecc=filtroBuscar(eventosSelecc, texto)
+  }
+  Tarjetas('contenedorTarjetas',eventosSelecc)
+  return eventosSelecc
+}
+
+entradaBusqueda.addEventListener("keyup", e=>{
+  texto= textoBusqueda.value.toLowerCase()
+  if(eventosSelecc.length>0){
+  eventosF=filtroBuscar(eventosSelecc, texto)
+} else {
+  eventosF=filtroBuscar(eventosHome, texto)
+}
+  return Tarjetas('contenedorTarjetas',eventosF)
+}
+)
