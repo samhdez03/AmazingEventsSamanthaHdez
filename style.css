@@ -59,9 +59,8 @@ footer{
 }
 
 .img-container{
-    padding-top: 100px;
     width:30vw;
-    height:70vh;
+    height:auto;
     overflow:hidden;
   }
   
