@@ -59,13 +59,13 @@ footer{
 }
 
 .img-container{
-    width:30vw;
-    height:auto;
+    width:28vw;
+    height:60vh;
     overflow:hidden;
   }
   
 .img-container img{
    
-    width:100%;
+    width:98%;
     height:auto
   }
