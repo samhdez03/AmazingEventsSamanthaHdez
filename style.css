@@ -48,3 +48,25 @@ footer{
     height:auto
 
 }
+
+#noEsta{
+    min-height: 46vh;
+    align-content: center;
+}
+
+#contenedorTarjetas{
+    min-height: 46vh;
+}
+
+.img-container{
+    padding-top: 100px;
+    width:630px;
+    height:380px;
+    overflow:hidden;
+  }
+  
+.img-container img{
+   
+    width:100%;
+    height:auto
+  }
