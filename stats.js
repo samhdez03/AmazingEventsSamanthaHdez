@@ -59,7 +59,7 @@ function calculos(datos, categ){
         let sum = datos.filter(d=>d.category == categ[i])
         result[i]= {
             category: categ[i],
-            revenues: (sum.reduce((prev, sum) => prev + sum.revenues, 0) / sum.length),
+            revenues: (sum.reduce((prev, sum) => prev + sum.revenues, 0)),
             assistance: (sum.reduce((prev2, sum) => prev2 + sum.reg, 0) / sum.length).toFixed(2)
         }
     }
